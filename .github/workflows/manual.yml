@@ -1,24 +1,24 @@
 name: Enduser deployment run
 
 on:
-workflow_dispatch:{}
-
+  workflow_dispatch:
+  
   push:
-      branches: 
-        -Production
+    branches:
+      - Production
 
 jobs:
   mabl-test:
     name: 'mabl Test'
     runs-on: ubuntu-20.04
-    needs: [ qa-deploy ]
+    
     steps:
-      - uses: actions/checkout@v3
-      - name: test deployment
-
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        
+      - name: Test deployment
         id: mabl-test-deployment
         uses: mablhq/github-run-tests-action@v1
-        
         with:
           environment-id: SD67BqZJhhXW6qajACZ5iw-e
           application-id: lGdHJ8W7ajFlcnNuV3Yngw-a
@@ -29,5 +29,5 @@ jobs:
           set-static-baseline: true
           rebaseline-images: true
         env:
-          MABL_API_KEY: ${{secrets.MABL_API_KEY}}
+          MABL_API_KEY: ${{ secrets.MABL_API_KEY }}
           PLAN_ID: dJNarywmfKVVwVZnx6Q6MA-p
