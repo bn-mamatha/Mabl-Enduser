@@ -1,0 +1,31 @@
+name: Enduser deployment run
+
+on:
+  push:
+    branches: 
+      -main
+
+jobs:
+  mabl-test:
+    name: 'mabl Test'
+    runs-on: ubuntu-20.04
+    needs: [ qa-deploy ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: test deployment
+
+        id: mabl-test-deployment
+        uses: mablhq/github-run-tests-action@v1
+        
+        with:
+          environment-id: SD67BqZJhhXW6qajACZ5iw-e
+          application-id: lGdHJ8W7ajFlcnNuV3Yngw-a
+          uri: https://gt3.ess.qa.cudaops.com/
+          browser-types: chrome
+          plan-labels: Deployment
+          continue-on-failure: false
+          set-static-baseline: true
+          rebaseline-images: true
+        env:
+          MABL_API_KEY: ${{secrets.MABL_API_KEY}}
+          PLAN_ID: dJNarywmfKVVwVZnx6Q6MA-p
