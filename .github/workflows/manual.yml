@@ -1,9 +1,11 @@
 name: Enduser deployment run
 
 on:
+workflow_dispatch:{}
+
   push:
-    branches: 
-      -main
+      branches: 
+        -Production
 
 jobs:
   mabl-test:
